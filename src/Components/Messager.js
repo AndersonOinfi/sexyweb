@@ -3,7 +3,7 @@ import React from 'react'
 import notification from 'antd/lib/notification'
 import 'antd/lib/notification/style/css'
 
-import AlbumIcon from './AlbumIcon.png'
+import AlbumIcon from '../../public/AlbumIcon.png'
 
 notification.config({
     duration: 2.5,
@@ -49,7 +49,6 @@ export class Messager extends React.Component {
         })
             .then(response => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 this.setState({
                     messages: responseJson
                 })

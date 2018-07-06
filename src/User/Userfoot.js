@@ -1,8 +1,11 @@
+import React, { Component } from 'react';
 
 import { Layout, } from 'antd';
-import React, { Component } from 'react';
 import 'antd/dist/antd.css';
+
 import '../index.css'
+
+
 const {  Footer, } = Layout;
 
 class Userfoot extends Component {

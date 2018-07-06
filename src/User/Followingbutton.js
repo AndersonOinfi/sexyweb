@@ -1,5 +1,7 @@
-import { Button, } from 'antd';
 import React, { Component } from 'react';
+
+import { Button, } from 'antd';
+
 
 class Followingbutton extends Component {
     state = {

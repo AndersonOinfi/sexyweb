@@ -1,10 +1,12 @@
-import { Layout, Menu, Icon } from 'antd';
 import React, { Component } from 'react';
-import { Divider } from 'antd';
-import { Input } from 'antd';
+
+import { Layout, Menu, Icon, Divider, Input } from 'antd';
 import 'antd/dist/antd.css';
+
 import '../index.css'
-const { Header,  } = Layout;
+
+
+const { Header } = Layout;
 const Search = Input.Search;
 
 class Headerdemo extends Component {

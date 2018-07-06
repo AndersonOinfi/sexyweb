@@ -1,13 +1,19 @@
-import { List, Avatar, Spin } from 'antd';
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
-import Followingbutton from './Followingbutton'
+
 /*npm install reqwest --save-dev*/
+import reqwest from 'reqwest';
+
+/*npm install react-virtualized --save*/
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import VList from 'react-virtualized/dist/commonjs/List';
 import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader';
-/*npm install react-virtualized --save*/
+
+import { List, Avatar, Spin } from 'antd';
+
+import Followingbutton from './Followingbutton'
+
+
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 class Friendslist extends Component {

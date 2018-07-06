@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+
+import { Card, Col, Row } from 'antd';
 import 'antd/dist/antd.css';
+
 import '../index.css'
-import { Col, Row } from 'antd';
+
+
 const { Meta } = Card;
 
 class Whitealbum2 extends Component {

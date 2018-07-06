@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Redirect, Link} from 'react-router-dom'
+import {BrowserRouter, Route, Redirect, Link, Switch} from 'react-router-dom'
 
 import User from './User/User'
 import Login from './login'
@@ -14,14 +14,16 @@ class Index extends React.Component {
         return(
             <BrowserRouter>
                 <div>
-                    <Route path='/' component={Login}/>
-                    <Route path='/user' compoenent={User}/>
+                    <Switch>
+                        <Route path='/' component={Login}/>
+                        <Route path='/user' compoenent={User}/>
+                    </Switch>
                 </div>
             </BrowserRouter>
         )
     }
 }
 
-ReactDOM.render(<User/>, document.getElementById('root'));
+ReactDOM.render(<Index/>, document.getElementById('root'));
 
 registerServiceWorker();

@@ -1,13 +1,14 @@
-
-import { Layout,  Icon } from 'antd';
 import React, { Component } from 'react';
-import { Tabs} from 'antd';
-import { Card } from 'antd';
+
+import { Layout, Icon, Tabs, Card, Col, Row } from 'antd';
 import 'antd/dist/antd.css';
+
 import '../index.css'
-import { Col, Row } from 'antd';
+
 import Whitealbum2 from "./Whitealbum2";
 import Friendslist from "./Friendslist";
+
+
 const { Header,} = Layout;
 const TabPane = Tabs.TabPane;
 

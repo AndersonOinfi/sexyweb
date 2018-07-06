@@ -1,13 +1,13 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import React, { Component } from 'react';
-import { Divider } from 'antd';
-import { Input } from 'antd';
+
+import { Layout, Menu, Breadcrumb, Icon, Divider, Input } from 'antd';
 import 'antd/dist/antd.css';
+
 import Headerdemo from './Headerdemo';
 import Userheader from './Userheader';
 import Userfoot from './Userfoot';
 
-import * as Messager from '../components/Messager'
+import * as Messager from '../Components/Messager'
 
 const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
