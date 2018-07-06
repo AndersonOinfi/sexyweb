@@ -8,6 +8,10 @@ const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
 
 class Headerdemo extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
                     <Header className="boder" style={{background: '#fff', position: 'fixed', zIndex: 1, width: '100%' ,height:80}}>
