@@ -3,7 +3,7 @@ import React from 'react'
 import notification from 'antd/lib/notification'
 import 'antd/lib/notification/style/css'
 
-import AlbumIcon from '../../public/AlbumIcon.png'
+// import AlbumIcon from '%PUBLIC_URL%/AlbumIcon.png'
 
 notification.config({
     duration: 2.5,
@@ -60,16 +60,16 @@ export class Messager extends React.Component {
 
 
     show() {
-        if(this.state.messages.length===0)
-            return;
-        tips('A Message!',
-            <img src={'http://localhost:8080/images/'+this.state.messages[0].user.avatar}/>,
-            this.state.messages[0].info+" "+this.state.messages[0].type)
+        if(this.state.messages!=null&&this.state.messages.length!==0) {
+            tips('A Message!',
+                <img src={'http://localhost:8080/images/' + this.state.messages[0].user.avatar}/>,
+                this.state.messages[0].info + " " + this.state.messages[0].type)
+        }
     }
 
     render() {
         return(
-            <div>A Little Happy Messager!</div>
+            <div></div>
         )
     }
 }

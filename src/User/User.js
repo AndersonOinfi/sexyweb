@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Divider, Input } from 'antd';
 import 'antd/dist/antd.css';
 
-import Headerdemo from './Headerdemo';
+import Headerdemo from '../Headerdemo/Headerdemo'
 import Userheader from './Userheader';
 import Userfoot from './Userfoot';
 
@@ -15,22 +15,58 @@ const Search = Input.Search;
 class User extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            api: 'http://localhost:8080/user',
+            // user: null,
+            avatar: null,
+            username: null,
+            followers: null,
+            followings: null,
+            profile: null
+        };
+        this.get.bind(this)
+    }
 
-        fetch("http://localhost:8080/user/account/login?username=jack&password=123", {
+    componentDidMount() {
+        this.get()
+    }
+
+    get() {
+        fetch(this.state.api, {
             credentials: "include"
         })
-            .then(response => response.text())
-            .then((responseText) => {
-                console.log(responseText)
-            })
+            .then(response => response.json())
+            .then((responseJson) => {
+                if (responseJson != null && responseJson.userid > 0) {
+                    let user = responseJson;
+                    this.setState({
+                        //user: responseJson,
+                        avatar: user.avatar,
+                        username: user.username,
+                        followers: user.followers,
+                        followings: user.followings,
+                        profile: null
+                    })
+                }
+            }).then(()=> {
+            console.log(this.state);
+        })
     }
+
+    avatarPrepath='http://localhost:8080/images/';
 
     render() {
         return (
             <div>
                 <Messager.Messager/>
                 <Headerdemo/>
-                <Userheader/>
+                <Userheader
+                    avatar={this.avatarPrepath+this.state.avatar}
+                    username={this.state.username}
+                    followers={this.state.followers}
+                    followings={this.state.followings}
+                    profile='然而并没有个人简介~'
+                />
                 <Userfoot/>
             </div>
         );

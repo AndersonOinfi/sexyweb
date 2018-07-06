@@ -13,6 +13,26 @@ const { Header,} = Layout;
 const TabPane = Tabs.TabPane;
 
 class Userheader extends Component {
+    constructor(props) {
+        super(props);
+        this.update.bind(this);
+        this.update(props);
+    }
+
+    componentWillReceiveProps(props) {
+        this.update(props)
+    }
+
+    update(props) {
+        this.state={
+            avatar: props.avatar,
+            username: props.username,
+            followers: props.followers,
+            followings: props.followings,
+            profile: props.profile
+        }
+    }
+
     render() {
         return (
             <Layout className="indexback">
@@ -24,18 +44,18 @@ class Userheader extends Component {
                             <Card
                                 bordered={false}
                                 style={{ width: 200,backgroundColor:'#fafafa' }}
-                                cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                                cover={<img alt="example" src={this.state.avatar} />}
                             >
                             </Card>
                         </Col>
                         <Col span={12}>
-                            <Card title="Nanali"
+                            <Card title={this.state.username}
                                   bordered={false}
                                   style={{ width: 300 ,backgroundColor:'#fafafa'}}
                                   actions={[<Icon type="edit" />, <Icon type="poweroff" />]}>
-                                <p>0 粉丝</p>
-                                <p>0 关注</p>
-                                <p>个人简介：</p>
+                                <p>{this.state.followers} 粉丝</p>
+                                <p>{this.state.followings} 关注</p>
+                                <p>个人简介： {this.state.profile}</p>
                             </Card>
                         </Col>
                     </Row>
