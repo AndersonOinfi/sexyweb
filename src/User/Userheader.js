@@ -1,12 +1,14 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+
+import { Layout,  Icon } from 'antd';
 import React, { Component } from 'react';
 import { Tabs} from 'antd';
 import { Card } from 'antd';
 import 'antd/dist/antd.css';
-import './Headerdemo.css';
+import '../index.css'
 import { Col, Row } from 'antd';
 import Whitealbum2 from "./Whitealbum2";
-const { Header, Content, Footer, Sider } = Layout;
+import Friendslist from "./Friendslist";
+const { Header,} = Layout;
 const TabPane = Tabs.TabPane;
 
 class Userheader extends Component {
@@ -43,6 +45,7 @@ class Userheader extends Component {
                             <Whitealbum2/>
                         </TabPane>
                         <TabPane tab={<span><Icon type="team" />好友列表</span>} key="2">
+                            <Friendslist/>
                         </TabPane>
                     </Tabs>
                 </div>

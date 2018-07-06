@@ -1,11 +1,9 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+
+import { Layout, } from 'antd';
 import React, { Component } from 'react';
-import { Divider } from 'antd';
-import { Input } from 'antd';
 import 'antd/dist/antd.css';
-import './Headerdemo.css'
-const { Header, Content, Footer, Sider } = Layout;
-const Search = Input.Search;
+import '../index.css'
+const {  Footer, } = Layout;
 
 class Userfoot extends Component {
     render() {
