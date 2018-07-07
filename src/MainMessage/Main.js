@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {Card, Row} from 'antd'
-import 'antd/dist/antd.css'
+import {Card, Row, Col} from 'antd'
+// import 'antd/dist/antd.css'
 
 
 export default class Main extends React.Component {
@@ -48,25 +48,30 @@ export default class Main extends React.Component {
     avatarPrepath='http://localhost:8080/images/';
 
     render() {
-        let items=[];
+        let items = [];
         for (let data of this.state.data) {
             items.push(
-                <Card
-                    cover={<img src={this.avatarPrepath+data.ele.source}/>}
-                    hoverble={true}
-                >
+                <Row>
                     <Card
-                        avatar={<img src={this.avatarPrepath+data.user.avatar}/>}
-                        description={data.ele.description}
-                    />
-                </Card>
+                        bodyStyle={{
+                            width: 600,
+                        }}
+                        cover={<img src={this.avatarPrepath + data.ele.source}/>}
+                        hoverble={true}
+                        loading={true}
+                    >
+                        {data.ele.description}
+                        <Meta
+                            avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
+                            title={data.user.username}
+                        />
+                    </Card>
+                </Row>
             )
         }
-        return(
+        return (
             <div>
-                <Row>
-                    {items}
-                </Row>
+                {items}
             </div>
         )
     }

@@ -20,7 +20,7 @@ class Index extends React.Component {
         return (
             <BrowserRouter>
                 <Route path=''>
-                    <div className='page'>
+                    <div id='page'>
                         <Headerdemo/>
                         <Route path='/' component={Login}/>
                         <Route path='/main' component={Main}/>
