@@ -8,6 +8,7 @@ import * as Messager from './Components/Messager'
 import Headerdemo from './Headerdemo/Headerdemo'
 import UserHeader from './User/Userheader'
 import Userfoot from './User/Userfoot'
+import Main from './MainMessage/Main'
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -22,6 +23,7 @@ class Index extends React.Component {
                     <div className='page'>
                         <Headerdemo/>
                         <Route path='/' component={Login}/>
+                        <Route path='/main' component={Main}/>
                         <Route path='/user' component={User}/>
                     </div>
                 </Route>
