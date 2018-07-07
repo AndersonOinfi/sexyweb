@@ -15,8 +15,16 @@ const TabPane = Tabs.TabPane;
 class Userheader extends Component {
     constructor(props) {
         super(props);
+        this.state={
+            avatar: props.avatar,
+            username: props.username,
+            followers: props.followers,
+            followings: props.followings,
+            profile: props.profile,
+            friendsid: props.friendsid,
+            albums: props.albums,
+        };
         this.update.bind(this);
-        this.update(props);
     }
 
     componentWillReceiveProps(props) {
@@ -24,13 +32,15 @@ class Userheader extends Component {
     }
 
     update(props) {
-        this.state={
+        this.setState({
             avatar: props.avatar,
             username: props.username,
             followers: props.followers,
             followings: props.followings,
-            profile: props.profile
-        }
+            profile: props.profile,
+            friendsid: props.friendsid,
+            albums: props.albums,
+        })
     }
 
     render() {
@@ -63,10 +73,10 @@ class Userheader extends Component {
                 <div style={{marginLeft:'23%',width:800, background: '#fafafa', padding: '0px',textAlign: 'center'}}>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab={<span><Icon type="picture" />我的相册</span>} key="1">
-                            <Whitealbum2/>
+                            <Whitealbum2 albums={this.state.albums}/>
                         </TabPane>
                         <TabPane tab={<span><Icon type="team" />好友列表</span>} key="2">
-                            <Friendslist/>
+                            <Friendslist friendsid={this.state.friendsid}/>
                         </TabPane>
                     </Tabs>
                 </div>

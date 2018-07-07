@@ -14,17 +14,30 @@ import { List, Avatar, Spin } from 'antd';
 import Followingbutton from './Followingbutton'
 
 
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
+// const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 class Friendslist extends Component {
-    state = {
-        data: [],
-        loading: false,
+    constructor(props) {
+        super(props);
+
+        this.state={
+            api: 'http://localhost:8080/user/skech?username=',
+            loading: false,
+            data: []
+        };
+        this.update.bind(this);
+        this.getData.bind(this);
+        this.update(props);
     }
 
-    loadedRowsMap = {}
+    loadedRowsMap = {};
 
-    getData = (callback) => {
+    componentWillReceiveProps(props) {
+        this.update(props)
+    }
+
+    getData(id) {
+        /*
         reqwest({
             url: fakeDataUrl,
             type: 'json',
@@ -34,14 +47,44 @@ class Friendslist extends Component {
                 callback(res);
             },
         });
+        */
+
+        // todo
+
+        let friend=null;
+        fetch(this.state.api+id,{
+            credentials: "include"
+        })
+            .then(response=>response.json())
+            .then((responseJson)=>{
+                friend=responseJson;
+                let data=this.state.data;
+                data.push(friend);
+                this.setState({
+                    data: data
+                });
+                console.log(this.state)
+            })
+    };
+
+    update(props) {
+        let friendsid=props.friendsid;
+        let data = [];
+        if(friendsid!=null&&friendsid.length!==0) {
+            for (let id of friendsid) {
+                this.getData(id)
+            }
+        }
     }
 
     componentDidMount() {
+        /*
         this.getData((res) => {
             this.setState({
                 data: res.results,
             });
         });
+        */
     }
 
     handleInfiniteOnLoad = ({ startIndex, stopIndex }) => {
@@ -59,6 +102,7 @@ class Friendslist extends Component {
             });
             return;
         }
+        /*
         this.getData((res) => {
             data = data.concat(res.results);
             this.setState({
@@ -66,11 +110,14 @@ class Friendslist extends Component {
                 loading: false,
             });
         });
-    }
+        */
+    };
+
+    avatarPrepath='http://localhost:8080/images/';
 
     isRowLoaded = ({ index }) => {
         return !!this.loadedRowsMap[index];
-    }
+    };
 
     renderItem = ({ index, key, style }) => {
         const { data } = this.state;
@@ -78,14 +125,14 @@ class Friendslist extends Component {
         return (
             <List.Item key={key} style={style}>
                 <List.Item.Meta
-                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                    title={<a href="https://ant.design">{item.name.last}</a>}
-                    description={item.email}
+                    avatar={<Avatar src={this.avatarPrepath+item.avatar} />}
+                    title={<a href="https://ant.design">{item.username}</a>}
+                    description='There is no description!'
                 />
                 <div><Followingbutton/></div>
             </List.Item>
         );
-    }
+    };
 
     render() {
         const { data } = this.state;
