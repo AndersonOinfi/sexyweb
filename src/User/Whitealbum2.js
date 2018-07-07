@@ -9,6 +9,24 @@ import '../index.css'
 const { Meta } = Card;
 
 class Whitealbum2 extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            albums: []
+        };
+        this.update.bind(this)
+    }
+
+    update(props) {
+        this.setState({
+            albums: props.albums
+        })
+    }
+
+    componentWillReceiveProps(props) {
+        this.update(props)
+    }
+
     render() {
         return (
             <div style={{width:'100%', background: '#fafafa'}}>

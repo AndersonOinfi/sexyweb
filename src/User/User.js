@@ -22,7 +22,9 @@ class User extends Component {
             username: null,
             followers: null,
             followings: null,
-            profile: null
+            profile: null,
+            friendsid: [],
+            albums: [],
         };
         this.get.bind(this)
     }
@@ -45,11 +47,13 @@ class User extends Component {
                         username: user.username,
                         followers: user.followers,
                         followings: user.followings,
-                        profile: null
+                        profile: null,
+                        friendsid: responseJson.friendsid,
+                        albums: responseJson.albums,
                     })
                 }
             }).then(()=> {
-            console.log(this.state);
+                // todo
         })
     }
 
@@ -66,6 +70,8 @@ class User extends Component {
                     followers={this.state.followers}
                     followings={this.state.followings}
                     profile='然而并没有个人简介~'
+                    friendsid={this.state.friendsid}
+                    albums={this.state.albums}
                 />
                 <Userfoot/>
             </div>
