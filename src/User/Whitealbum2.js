@@ -1,13 +1,11 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import React, { Component } from 'react';
-import { Tabs} from 'antd';
-import { Upload, Modal } from 'antd';
-import { Card } from 'antd';
+
+import { Card, Col, Row } from 'antd';
 import 'antd/dist/antd.css';
-import './Headerdemo.css';
-import { Col, Row } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
-const TabPane = Tabs.TabPane;
+
+import '../index.css'
+
+
 const { Meta } = Card;
 
 class Whitealbum2 extends Component {

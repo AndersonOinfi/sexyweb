@@ -1,64 +1,36 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import React, { Component } from 'react';
-import { Tabs} from 'antd';
-import { Card } from 'antd';
+
+import { Layout, Icon, Tabs, Card, Col, Row } from 'antd';
 import 'antd/dist/antd.css';
-import './Headerdemo.css';
-import { Col, Row } from 'antd';
+
+import '../index.css'
+
 import Whitealbum2 from "./Whitealbum2";
-const { Header, Content, Footer, Sider } = Layout;
+import Friendslist from "./Friendslist";
+
+
+const { Header,} = Layout;
 const TabPane = Tabs.TabPane;
 
 class Userheader extends Component {
     constructor(props) {
         super(props);
+        this.update.bind(this);
+        this.update(props);
+    }
+
+    componentWillReceiveProps(props) {
+        this.update(props)
+    }
+
+    update(props) {
         this.state={
-            api: 'http://localhost:8080/user',
-            status: 0,
-            user: null,
-            username: null,
-            avatar: null,
-            followers: null,
-            followings: null,
-            profile: '这个人很懒，并没有填简介~'
-        };
-        this.get.bind(this);
-    }
-
-    get() {
-        fetch(this.state.api,{
-            credentials: "include"
-        })
-            .then(response=>response.json())
-            .then((responseJson)=>{
-                this.setState({
-                    user: responseJson,
-                    username: responseJson.username,
-                    avatar: 'http://localhost:8080/images/'+responseJson.avatar,
-                })
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:8080/user/account/login?username=jack&password=123',{
-            credentials: "include"
-        })
-            .then(response=>response.text())
-            .then((responseText)=>{
-                this.setState({
-                    status: responseText
-                })
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-    }
-
-    componentDidUpdate() {
-        this.get();
+            avatar: props.avatar,
+            username: props.username,
+            followers: props.followers,
+            followings: props.followings,
+            profile: props.profile
+        }
     }
 
     render() {
@@ -83,7 +55,7 @@ class Userheader extends Component {
                                   actions={[<Icon type="edit" />, <Icon type="poweroff" />]}>
                                 <p>{this.state.followers} 粉丝</p>
                                 <p>{this.state.followings} 关注</p>
-                                <p>个人简介：{this.state.profile}</p>
+                                <p>个人简介： {this.state.profile}</p>
                             </Card>
                         </Col>
                     </Row>
@@ -94,6 +66,7 @@ class Userheader extends Component {
                             <Whitealbum2/>
                         </TabPane>
                         <TabPane tab={<span><Icon type="team" />好友列表</span>} key="2">
+                            <Friendslist/>
                         </TabPane>
                     </Tabs>
                 </div>

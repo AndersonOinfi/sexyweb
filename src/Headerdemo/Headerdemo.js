@@ -1,17 +1,15 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import React, { Component } from 'react';
-import { Divider } from 'antd';
-import { Input } from 'antd';
+
+import { Layout, Menu, Icon, Divider, Input } from 'antd';
 import 'antd/dist/antd.css';
-import './Headerdemo.css'
-const { Header, Content, Footer, Sider } = Layout;
+
+import '../index.css'
+
+
+const { Header } = Layout;
 const Search = Input.Search;
 
 class Headerdemo extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
                     <Header className="boder" style={{background: '#fff', position: 'fixed', zIndex: 1, width: '100%' ,height:80}}>
@@ -26,7 +24,7 @@ class Headerdemo extends Component {
                         <Menu
                             theme="white"
                             mode="horizontal"
-                            defaultSelectedKeys={['1']}
+                            defaultSelectedKeys={['3']}
                             style={{paddingRight:'10%', lineHeight: '80px' ,float:'right',height:80}}
                         >
                             <Menu.Item key="1"><Icon type="compass" style={{ fontSize:'1.4em'}} /></Menu.Item>
