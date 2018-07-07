@@ -6,7 +6,7 @@ export default class Explore extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            api: 'http://localhost:8080/user/explor',
+            api: 'http://localhost:8080/user/explore',
             data: []
         };
         this.get.bind(this);
@@ -27,8 +27,8 @@ export default class Explore extends React.Component {
                     let data = this.state.data;
                     for (let message of messages) {
                         data.push({
-                            ele: message.ele,
-                            user: message.user,
+                            ele: message,
+                            // user: message.user,
                         });
                     }
                     this.setState({
@@ -40,43 +40,39 @@ export default class Explore extends React.Component {
 
     avatarPrepath = 'http://localhost:8080/images/';
 
-    RenderItem(data) {
-        return (
-            <Card
-                cover={<img src={this.avatarPrepath + data.ele.source}/>}
-                hoverble={true}
-            >
-                <Meta
-                    avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
-                    title={data.user.username}
-                />
-            </Card>
-        )
-    }
-
-
     render() {
+        const RenderItem = (data) => {
+            return (
+                <Card
+                    cover={<img src={this.avatarPrepath + data.ele.source}/>}
+                    hoverable={true}
+                >
+                    {data.ele.description}
+                </Card>
+            )
+        };
         let items = [];
         let data = this.state.data;
         let len = this.state.data.length;
-        for (let i in len) {
-            d1 = (i === len) ? <RenderItem data={data[i]}/> : null;
-            i++;
-            d2 = (i === len) ? <RenderItem data={data[i]}/> : null;
-            i++;
-            d3 = (i === len) ? <RenderItem data={data[i]}/> : null;
-            i++;
-            d4 = (i === len) ? <RenderItem data={data[i]}/> : null;
-            i++;
+        let d=new Array(4);
+        for (let i = 0; i < len;) {
+            for (let j=0;j<4;++j) {
+                if(i===len)
+                    d[j]=null;
+                else {
+                    d[j]=RenderItem(data[i])
+                    ++i;
+                }
+            }
+            items.push(
+                <Row gutter={24}>
+                    <Col span={6}>{d[0]}</Col>
+                    <Col span={6}>{d[1]}</Col>
+                    <Col span={6}>{d[2]}</Col>
+                    <Col span={6}>{d[3]}</Col>
+                </Row>
+            );
         }
-        items.push(
-            <Row>
-                <Col>{d1}</Col>
-                <Col>{d2}</Col>
-                <Col>{d3}</Col>
-                <Col>{d4}</Col>
-            </Row>
-        );
         return (
             <div>
                 {items}

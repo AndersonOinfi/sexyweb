@@ -52,20 +52,19 @@ export default class Main extends React.Component {
         for (let data of this.state.data) {
             items.push(
                 <Row>
-                    <Card
-                        bodyStyle={{
-                            width: 600,
-                        }}
-                        cover={<img src={this.avatarPrepath + data.ele.source}/>}
-                        hoverble={true}
-                        loading={true}
-                    >
-                        {data.ele.description}
-                        <Meta
-                            avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
-                            title={data.user.username}
-                        />
-                    </Card>
+                    <Col offset={3} span={12}>
+                        <Card
+                            cover={<img src={this.avatarPrepath + data.ele.source}/>}
+                            hoverable={true}
+                            //loading={true}
+                        >
+                            {data.ele.description}
+                            <Card.Meta
+                                avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
+                                title={data.user.username}
+                            />
+                        </Card>
+                    </Col>
                 </Row>
             )
         }

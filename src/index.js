@@ -9,6 +9,7 @@ import Headerdemo from './Headerdemo/Headerdemo'
 import UserHeader from './User/Userheader'
 import Userfoot from './User/Userfoot'
 import Main from './MainMessage/Main'
+import Explore from './MainMessage/Explore'
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -24,6 +25,7 @@ class Index extends React.Component {
                         <Headerdemo/>
                         <Route path='/' component={Login}/>
                         <Route path='/main' component={Main}/>
+                        <Route path='/explore' component={Explore}/>
                         <Route path='/user' component={User}/>
                     </div>
                 </Route>
