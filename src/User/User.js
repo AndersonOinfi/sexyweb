@@ -63,7 +63,6 @@ class User extends Component {
         return (
             <div>
                 <Messager.Messager/>
-                <Headerdemo/>
                 <Userheader
                     avatar={this.avatarPrepath+this.state.avatar}
                     username={this.state.username}

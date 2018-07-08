@@ -2,13 +2,15 @@ import React from 'react'
 
 import {Card, Row, Col} from 'antd'
 
+import * as EleModal from './EleModal'
 
 export default class Explore extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             api: 'http://localhost:8080/user/explore',
-            data: []
+            data: [],
+            modalKey: -1,
         };
         this.get.bind(this);
     }
@@ -61,16 +63,16 @@ export default class Explore extends React.Component {
                 if(i===len)
                     d[j]=null;
                 else {
-                    d[j]=RenderItem(data[i])
+                    d[j]=RenderItem(data[i]);
                     ++i;
                 }
             }
             items.push(
-                <Row gutter={24}>
-                    <Col span={6}>{d[0]}</Col>
-                    <Col span={6}>{d[1]}</Col>
-                    <Col span={6}>{d[2]}</Col>
-                    <Col span={6}>{d[3]}</Col>
+                <Row gutter={24} type='flex' align='top'>
+                    <Col span={6} xs >{d[0]}</Col>
+                    <Col span={6} xs >{d[1]}</Col>
+                    <Col span={6} xs >{d[2]}</Col>
+                    <Col span={6} xs >{d[3]}</Col>
                 </Row>
             );
         }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Card, Row, Col, Icon, Input} from 'antd'
+import {Card, Row, Col, Icon, Input, Dropdown, Menu, Modal} from 'antd'
 // import 'antd/dist/antd.css'
 
 
@@ -14,13 +14,16 @@ export default class Main extends React.Component {
             commentApi: 'http://localhost:8080/user/comment',
             getCommentsApi: 'http://localhost:8080/user/elecomments',
             data: [],
+            modalKey: -1,
         };
+        /*
         this.update.bind(this);
         this.get.bind(this);
         this.like.bind(this);
         this.comment.bind(this);
         this.showComments.bind(this);
         this.RenderComments.bind(this);
+        */
     }
 
     componentDidMount() {
@@ -121,9 +124,10 @@ export default class Main extends React.Component {
             .then(reponse=>reponse.json())
             .then((responseJson)=>{
                 if(responseJson>0) {
-                    data[key].ele.comments.push(
-                        this.c(value)
-                    );
+                    data[key].ele.comments.push({
+                        // todo
+                        comments: value,
+                    });
                     data[key].comment='';
                     this.setState({
                         data: data
@@ -132,30 +136,41 @@ export default class Main extends React.Component {
             })
     }
 
+    EleOnclick(key) {
+        this.setState({
+            modalKey: this.state.modalKey >= 0 ? -1 : key
+        })
+    }
+
     RenderComments(key) {
         let cs=[];
         let data=this.state.data;
-        for (let comment in data[key].ele.comments) {
+        if(data[key].ele.comments!=null) {
+            for (let comment of data[key].ele.comments) {
+                cs.push(
+                    this.c(comment.comments)
+                )
+            }
             cs.push(
-                this.c(comment.comments)
-            )
-        }
-        cs.push(
-            <Input.TextArea
-                value={data[key].comment}
-                placeholder='your comments'
-                autosize={{minRows: 1,maxRows: 4}}
-                onChange={(e) => {
-                    e.preventDefault();
-                    let data = this.state.data;
-                    data[key].comment = e.target.value;
-                    this.setState({
+                <Input.TextArea
+                    value={data[key].comment}
+                    placeholder='your comments'
+                    autosize={{minRows: 1, maxRows: 4}}
+                    onChange={(e) => {
+                        e.preventDefault();
+                        let data = this.state.data;
+                        data[key].comment = e.target.value;
+                        this.setState({
                             data: data
-                        })}}
-                onPressEnter={(e)=>{this.comment(key,e)}}
-            />
-        );
-        return cs;
+                        })
+                    }}
+                    onPressEnter={(e) => {
+                        this.comment(key, e)
+                    }}
+                />
+            );
+            return cs;
+        }
     }
 
     avatarPrepath='http://localhost:8080/images/';
@@ -166,15 +181,23 @@ export default class Main extends React.Component {
         for (let data of this.state.data) {
             items.push(
                 <Row>
-                    <Col offset={3} span={12}>
+                    <Col offset={2} span={12}>
                         <Card
-                            cover={<img src={this.avatarPrepath + data.ele.source}/>}
+                            cover={<img src={this.avatarPrepath + data.ele.source} onClick={this.EleOnclick.bind(this,data.key)}/>}
                             hoverable={true}
                             //loading={true}
                             actions={[
-                                <Icon type={data.like} onClick={this.like.bind(this,data.key)}/>,
-                                <Icon type="message" style={{}} onClick={this.showComments.bind(this,data.key)}/>,
-                                <Icon type="ellipsis" />,
+                                <Icon type={data.like}
+                                      style={data.like === 'heart' ? {color: '#FF6666'} : null}
+                                      onClick={this.like.bind(this, data.key)}
+                                />,
+                                <Icon type="message"
+                                      style={{}}
+                                      onClick={this.showComments.bind(this, data.key)}
+                                />,
+                                <Icon type="share-alt"
+                                      onClick={null}
+                                />,
                             ]}
                         >
                             {data.ele.description}
@@ -183,7 +206,7 @@ export default class Main extends React.Component {
                                 title={data.user.username}
                             />
                             <div
-                                style={data.showComments===true?{display: 'none'}:null}
+                                style={data.showComments === true ? null : {display: 'none'}}
                             >
                                 {RenderComments(data.key)}
                             </div>
@@ -192,8 +215,31 @@ export default class Main extends React.Component {
                 </Row>
             )
         }
+        const EleModal=(key)=>{
+            let data=this.state.data;
+            if(data.length>0&&key>=0) {
+                return (
+                    <Modal visible={key >= 0}
+                        // closable={false}
+                           footer={null}
+                           onCancel={this.EleOnclick.bind(this, -1)}
+                           width='75%'
+                           bodyStyle={{
+                               // backgroundcolor: 'rgba(0,0,0,0.5)'
+                           }}
+                    >
+                        <Card cover={<img src={this.avatarPrepath + data[key].ele.source}/>}
+                              hoverable={true}
+                        >
+                            <Card.Meta description={data[key].ele.description}/>
+                        </Card>
+                    </Modal>
+                )
+            }
+        };
         return (
             <div>
+                {EleModal(this.state.modalKey)}
                 {items}
             </div>
         )

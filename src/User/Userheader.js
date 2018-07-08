@@ -46,7 +46,6 @@ class Userheader extends Component {
     render() {
         return (
             <Layout className="indexback">
-                <Header style={{width: '100%' ,height:80}}/>
                 <div style={{width:500, background: '#fafafa', padding: '0px',marginLeft:'30%',marginTop:50 }}>
                     <Row>
                         <Col span={12}>
