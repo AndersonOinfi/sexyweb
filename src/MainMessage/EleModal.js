@@ -5,22 +5,18 @@ import {Modal, Card} from 'antd'
 
 const avatarPrepath='http://localhost:8080/images/';
 
-export const EleModal=(key,data,eleClick)=>{
-    if(data!=null&&key>=0) {
+export const EleModal=(data,eleClick)=>{
+    if(data!=null) {
         return (
-            <Modal // visible={true}
-                // closable={false}
+            <Modal visible={true}
                    footer={null}
-                   onCancel={eleClick(-1)}
+                   onCancel={()=>eleClick(-1)}
                    width='75%'
-                   bodyStyle={{
-                       // backgroundcolor: 'rgba(0,0,0,0.5)'
-                   }}
             >
-                <Card cover={<img src={avatarPrepath + data[key].ele.source}/>}
+                <Card cover={<img src={avatarPrepath + data.ele.source}/>}
                       hoverable={true}
                 >
-                    <Card.Meta description={data[key].ele.description}/>
+                    <Card.Meta description={data.ele.description}/>
                 </Card>
             </Modal>
         )

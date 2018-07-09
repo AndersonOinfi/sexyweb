@@ -89,7 +89,7 @@ export default class Explore extends React.Component {
             ele=data[key];
         return (
             <div>
-                {EleModal.EleModal(key,ele,eleOnclick.bind(this))}
+                {EleModal.EleModal(ele,eleOnclick.bind(this))}
                 {items}
             </div>
         )

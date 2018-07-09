@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Redirect, Link, Switch} from 'react-router-dom'
 
 import Login from './login'
+import Signup from './signup'
 import User from './User/User'
 import * as Messager from './Components/Messager'
 import Headerdemo from './Headerdemo/Headerdemo'
@@ -20,16 +21,22 @@ class Index extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <Route path=''>
-                    <div id='page'>
-                        <Headerdemo/>
-                        <Messager.Messager/>
-                        <Route path='/' component={Login}/>
-                        <Route path='/main' component={Main}/>
-                        <Route path='/explore' component={Explore}/>
-                        <Route path='/user' component={User}/>
-                    </div>
-                </Route>
+                <Switch>
+                    <Route path='/login' component={Login}/>
+                    <Route path='/signup' component={Signup}/>
+                    <Route path='/page' component={
+                        <div id='head'>
+                            <Headerdemo/>
+                            <Messager.Messager/>
+                        </div>
+                    }>
+                        <Switch>
+                            <Route path='/main' exact component={Main}/>
+                            <Route path='/explore' component={Explore}/>
+                            <Route path='/user' component={User}/>
+                        </Switch>
+                    </Route>
+                </Switch>
             </BrowserRouter>
         )
     }

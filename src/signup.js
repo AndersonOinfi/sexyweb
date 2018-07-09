@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+
+import {Link, withRouter} from 'react-router-dom'
+
 import './login.css'
-import $ from "jquery";
+
+
 const FormItem = Form.Item;
 
 
@@ -21,22 +26,33 @@ class NormalSignupForm extends React.Component {
                 console.log('Received values of form: ', values);
                 var username = document.signupform.username.value;
                 var password = document.signupform.password.value;
-                var passworda =document.signupform.passworda.value;
+                var passworda = document.signupform.passworda.value;
                 let formData = new FormData();
-                formData.append('username',username);
-                formData.append('password',password);
-                if(password==passworda){
-                fetch("http://localhost:8080/user/account/signup", {
-                    method:'POST',
-                    credentials: "include",
-                    body:formData,
-                })
-                    .then(response => response.text())
-                    .then((responseText) => {
-                        alert("注册成功，正在返回登录界面。")
-                        this.props.onSigned();
-                    });
-                }else alert("两次密码输入不一致，请重新输入。")
+                formData.append('username', username);
+                formData.append('password', password);
+                let history=this.props.history;
+                if (password === passworda) {
+                    fetch("http://localhost:080/user/account/signup", {
+                        method: 'POST',
+                        credentials: "include",
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then((responseJson) => {
+                            if(responseJson>0) {
+                                alert("注册成功，正在返回登录界面。");
+                                history.push('/login');
+                            }
+                            else {
+                                alert('注册失败');
+                                history.push('/signup');
+                            }
+                        });
+                }
+                else {
+                    alert("两次密码输入不一致，请重新输入。");
+                    history.push('/signup');
+                }
             }
         });
     }
@@ -81,7 +97,7 @@ class NormalSignupForm extends React.Component {
                             Sign up
                         </Button>
                         <br/>
-                        <a href='#' onClick={()=>this.props.onSigned()}>Back</a>
+                        <Link to='/login'>Back</Link>
                     </FormItem>
                 </Form>
             </div>
@@ -92,4 +108,4 @@ class NormalSignupForm extends React.Component {
 
 const WrappedNormalSignupForm = Form.create()(NormalSignupForm);
 
-export default WrappedNormalSignupForm;
+export default withRouter(WrappedNormalSignupForm);

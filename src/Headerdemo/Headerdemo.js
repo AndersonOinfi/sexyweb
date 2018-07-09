@@ -56,7 +56,7 @@ class Headerdemo extends Component {
                         </Menu.Item>
                         <Menu.Item key="2">
                             <Popover placement='Bottom'>
-                            <Icon type="heart-o" style={{fontSize: '1.4em'}}/>
+                                <Icon type="heart-o" style={{fontSize: '1.4em'}}/>
                             </Popover>
                         </Menu.Item>
                         <Menu.Item key="3">
