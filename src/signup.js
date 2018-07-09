@@ -9,7 +9,6 @@ import './login.css'
 
 const FormItem = Form.Item;
 
-
 class NormalSignupForm extends React.Component {
     constructor(props) {
         super(props);
@@ -55,14 +54,14 @@ class NormalSignupForm extends React.Component {
                 }
             }
         });
-    }
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className={"div"}>
                 <h3 className="title">CoolMe Album</h3>
-                <Form onSubmit={this.handleSubmit} className="login-form" name="signupform">
+                <Form onSubmit={(e)=>this.handleSubmit.bind(this,e)} className="login-form" name="signupform">
                     <FormItem>
                         {getFieldDecorator('userName', {
                             rules: [{ required: true, message: 'Please input your username!' }],

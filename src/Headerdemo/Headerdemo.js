@@ -33,7 +33,7 @@ class Headerdemo extends Component {
                     <a href="#"><Icon type="instagram"
                                       style={{paddingLeft: '5%', fontSize: 50, color: '#000000', margin: 10}}/></a>
                     <Divider type="vertical" style={{height: 40}}/>
-                    <Link to='/main'><a href="#" style={{
+                    <Link to='/page/main'><a href="#" style={{
                         paddingLeft: '1%',
                         color: '#000000',
                         fontSize: '2.4em'
@@ -50,7 +50,7 @@ class Headerdemo extends Component {
                         style={{paddingRight: '10%', lineHeight: '80px', float: 'right', height: 80}}
                     >
                         <Menu.Item key="1">
-                            <Link to='/explore'>
+                            <Link to='/page/explore'>
                                 <Icon type="compass" style={{fontSize: '1.4em'}}/>
                             </Link>
                         </Menu.Item>
@@ -60,7 +60,7 @@ class Headerdemo extends Component {
                             </Popover>
                         </Menu.Item>
                         <Menu.Item key="3">
-                            <Link to='/user'>
+                            <Link to='/page/user'>
                                 <Icon type="user" style={{fontSize: '1.4em'}}/>
                             </Link>
                         </Menu.Item>

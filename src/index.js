@@ -17,6 +17,18 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 
+const PrimaryLayout=()=>(
+    <div>
+        <Headerdemo/>
+        <Messager.Messager/>
+        <Switch>
+            <Route path='/page/main' component={Main}/>
+            <Route path='/page/explore' component={Explore}/>
+            <Route path='/page/user' component={User}/>
+        </Switch>
+    </div>
+);
+
 class Index extends React.Component {
     render() {
         return (
@@ -24,18 +36,7 @@ class Index extends React.Component {
                 <Switch>
                     <Route path='/login' component={Login}/>
                     <Route path='/signup' component={Signup}/>
-                    <Route path='/page' component={
-                        <div id='head'>
-                            <Headerdemo/>
-                            <Messager.Messager/>
-                        </div>
-                    }>
-                        <Switch>
-                            <Route path='/main' exact component={Main}/>
-                            <Route path='/explore' component={Explore}/>
-                            <Route path='/user' component={User}/>
-                        </Switch>
-                    </Route>
+                    <Route path='/page' component={PrimaryLayout}/>
                 </Switch>
             </BrowserRouter>
         )

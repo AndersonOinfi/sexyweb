@@ -13,13 +13,12 @@ class NormalLoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {userName: "", password: "", remember: true};
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     //  componentDidMount(){
     // }
     handleSubmit = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         var func = this.props.onLogin;
         this.props.form.validateFields((err, values) => {
             if (!err) {
@@ -38,7 +37,6 @@ class NormalLoginForm extends React.Component {
                     .then(response => response.json())
                     .then((responseJson) => {
                         let url = responseJson > 0 ? '/page/main' : '/login';
-                        let test=this;
                         this.props.history.push(url);
                     });
             }
@@ -50,7 +48,7 @@ class NormalLoginForm extends React.Component {
         return (
             <div className={"div"}>
                 <h3 className="title">CoolMe Album</h3>
-                <Form onSubmit={this.handleSubmit.bind(this)} className="login-form" name="loginform">
+                <Form onSubmit={(e)=>this.handleSubmit.bind(this,e)} className="login-form" name="loginform">
                     <FormItem>
                         {getFieldDecorator('userName', {
                             rules: [{required: true, message: 'Please input your username!'}],
