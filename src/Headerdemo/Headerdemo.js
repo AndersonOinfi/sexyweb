@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import { Layout, Menu, Icon, Divider, Input, Popover } from 'antd';
+import { Layout, Menu, Icon, Divider, Input, Popover, Card, Button, Avatar, Row } from 'antd';
 import 'antd/dist/antd.css';
 
 import {Link} from 'react-router-dom'
 
 import '../index.css'
+
+import {AvatarPrepath} from "../Utils/Constant";
 
 
 const { Header } = Layout;
@@ -15,7 +17,8 @@ class Headerdemo extends Component {
     constructor(props) {
         super(props);
         this.state={
-            likesApi: 'http://localhost:8080/user/likes',
+            likesApi: 'http://localhost:8080/user/like/likes',
+            likesData: [],
         }
     }
 
@@ -23,9 +26,37 @@ class Headerdemo extends Component {
         fetch(this.state.likesApi,{
             credentials: "include"
         })
+            .then(response=>response.json())
+            .then((responseJson)=>{
+                this.setState({
+                    likesData: responseJson
+                })
+            })
     }
 
     render() {
+        const RenderLikes = () => {
+            let ds = [];
+            for (let data of this.state.likesData) {
+                ds.push(
+                    <Row>
+                        <Card.Grid
+                            style={{
+                                width: '100%',
+                                textAlign: 'left',
+                                // height: '10%',
+                            }}
+                        >
+                            <div>
+                                <Avatar src={AvatarPrepath + data.source}/>
+                                {data.description}
+                            </div>
+                        </Card.Grid>
+                    </Row>
+                )
+            }
+            return ds.length>0?ds:'nothing to show here, see more in explore!';
+        };
         return (
             <div style={{width: '100%', height: 80}}>
                 <Header className="boder"
@@ -46,7 +77,7 @@ class Headerdemo extends Component {
                     <Menu
                         theme="white"
                         mode="horizontal"
-                        defaultSelectedKeys={['3']}
+                        //defaultSelectedKeys={['3']}
                         style={{paddingRight: '10%', lineHeight: '80px', float: 'right', height: 80}}
                     >
                         <Menu.Item key="1">
@@ -55,8 +86,8 @@ class Headerdemo extends Component {
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <Popover placement='Bottom'>
-                                <Icon type="heart-o" style={{fontSize: '1.4em'}}/>
+                            <Popover placement='bottom' content={RenderLikes.bind(this)()} onMouseEnter={this.getLikes.bind(this)}>
+                            <Icon type="heart-o" style={{fontSize: '1.4em'}}/>
                             </Popover>
                         </Menu.Item>
                         <Menu.Item key="3">

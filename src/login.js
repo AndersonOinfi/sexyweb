@@ -18,8 +18,8 @@ class NormalLoginForm extends React.Component {
     //  componentDidMount(){
     // }
     handleSubmit = (e) => {
-        //e.preventDefault();
-        var func = this.props.onLogin;
+        e.preventDefault();
+        // var func = this.props.onLogin;
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
@@ -48,7 +48,7 @@ class NormalLoginForm extends React.Component {
         return (
             <div className={"div"}>
                 <h3 className="title">CoolMe Album</h3>
-                <Form onSubmit={(e)=>this.handleSubmit.bind(this,e)} className="login-form" name="loginform">
+                <Form onSubmit={(e)=>this.handleSubmit(e)} className="login-form" name="loginform">
                     <FormItem>
                         {getFieldDecorator('userName', {
                             rules: [{required: true, message: 'Please input your username!'}],

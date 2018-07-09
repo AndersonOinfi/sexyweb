@@ -1,17 +1,14 @@
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import React, { Component } from 'react';
-import { Tabs} from 'antd';
-import { Upload, Modal } from 'antd';
-import { Card } from 'antd';
+
+import { Layout, Menu, Breadcrumb, Icon, Tabs, Card, Upload, Modal, Col, Row } from 'antd';
+
 import 'antd/dist/antd.css';
-import './Headerdemo.css';
-import { Col, Row } from 'antd';
-import Friendslist from "./Friendslist";
+
+
 const { Header, Content, Footer, Sider } = Layout;
 const TabPane = Tabs.TabPane;
 const { Meta } = Card;
 const str="http://localhost:8080/images/"
-
 
 function Rowthree(props) {
     return (

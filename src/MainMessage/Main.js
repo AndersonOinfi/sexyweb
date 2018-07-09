@@ -48,7 +48,7 @@ export default class Main extends React.Component {
                         data.push({
                             ele: message.ele,
                             user: message.user,
-                            like: 'heart-o',
+                            like: message.likingEle?'heart':'heart-o',
                             showComments: false,
                             comment: '',
                             key: key++,

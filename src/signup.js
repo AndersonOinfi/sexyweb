@@ -31,7 +31,7 @@ class NormalSignupForm extends React.Component {
                 formData.append('password', password);
                 let history=this.props.history;
                 if (password === passworda) {
-                    fetch("http://localhost:080/user/account/signup", {
+                    fetch("http://localhost:8080/user/account/signup", {
                         method: 'POST',
                         credentials: "include",
                         body: formData,
@@ -61,7 +61,7 @@ class NormalSignupForm extends React.Component {
         return (
             <div className={"div"}>
                 <h3 className="title">CoolMe Album</h3>
-                <Form onSubmit={(e)=>this.handleSubmit.bind(this,e)} className="login-form" name="signupform">
+                <Form onSubmit={(e)=>this.handleSubmit(e)} className="login-form" name="signupform">
                     <FormItem>
                         {getFieldDecorator('userName', {
                             rules: [{ required: true, message: 'Please input your username!' }],

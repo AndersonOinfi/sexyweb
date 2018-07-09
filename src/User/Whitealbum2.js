@@ -5,13 +5,16 @@ import 'antd/dist/antd.css';
 
 import '../index.css'
 
+import Album from './Albumtest'
+import {AvatarPrepath} from '../Utils/Constant'
+
 
 const { Meta } = Card;
 
 class Whitealbum2 extends Component {
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             albums: []
         };
         this.update.bind(this)
@@ -28,43 +31,36 @@ class Whitealbum2 extends Component {
     }
 
     render() {
+        const RenderAlbums=()=>{
+            let as=[];
+            for (let album of this.state.albums) {
+                let cover="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png";
+                if(album.length>0)
+                    cover=AvatarPrepath+album[0].source;
+                as.push(
+                    <Col span={8}>
+                        <Card
+                            hoverable
+                            style={{width: 250}}
+                            cover={<img alt=''
+                                        src={cover}/>}
+                        >
+                            <Meta
+                                title={album.albumname}
+                            />
+                        </Card>
+                    </Col>
+                )
+            }
+        };
+        // todo add <Album/> to bottom
         return (
-            <div style={{width:'100%', background: '#fafafa'}}>
-                <Row gutter={32}>
-                    <Col span={8} >
-                <Card
-                    hoverable
-                    style={{ width: 250 }}
-                    cover={<img  alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta
-                        title="相册1"
-                    />
-                </Card>
-                    </Col>
-                    <Col span={8}>
-                        <Card
-                            hoverable
-                            style={{ width: 250 }}
-                            cover={<img  alt="example" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />}
-                        >
-                            <Meta
-                                title="相册2"
-                            />
-                        </Card>
-                    </Col>
-                    <Col span={8}>
-                        <Card
-                            hoverable
-                            style={{ width: 250 }}
-                            cover={<img  alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                        >
-                            <Meta
-                                title="相册3"
-                            />
-                        </Card>
-                    </Col>
-                </Row>
+            <div>
+                <div style={{width: '100%', background: '#fafafa'}}>
+                    <Row gutter={32}>
+                        {RenderAlbums.bind(this)()}
+                    </Row>
+                </div>
             </div>
         );
     }
