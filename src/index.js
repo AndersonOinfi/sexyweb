@@ -23,6 +23,7 @@ class Index extends React.Component {
                 <Route path=''>
                     <div id='page'>
                         <Headerdemo/>
+                        <Messager.Messager/>
                         <Route path='/' component={Login}/>
                         <Route path='/main' component={Main}/>
                         <Route path='/explore' component={Explore}/>

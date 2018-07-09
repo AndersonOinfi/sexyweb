@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Layout, Menu, Icon, Divider, Input } from 'antd';
+import { Layout, Menu, Icon, Divider, Input, Popover } from 'antd';
 import 'antd/dist/antd.css';
 
 import {Link} from 'react-router-dom'
@@ -12,6 +12,19 @@ const { Header } = Layout;
 const Search = Input.Search;
 
 class Headerdemo extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            likesApi: 'http://localhost:8080/user/likes',
+        }
+    }
+
+    getLikes() {
+        fetch(this.state.likesApi,{
+            credentials: "include"
+        })
+    }
+
     render() {
         return (
             <div style={{width: '100%', height: 80}}>
@@ -42,7 +55,9 @@ class Headerdemo extends Component {
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="2">
+                            <Popover placement='Bottom'>
                             <Icon type="heart-o" style={{fontSize: '1.4em'}}/>
+                            </Popover>
                         </Menu.Item>
                         <Menu.Item key="3">
                             <Link to='/user'>

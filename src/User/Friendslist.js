@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /*npm install reqwest --save-dev*/
-import reqwest from 'reqwest';
+// import reqwest from 'reqwest';
 
 /*npm install react-virtualized --save*/
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';

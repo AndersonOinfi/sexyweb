@@ -101,6 +101,7 @@ export default class Main extends React.Component {
     }
 
     c=(comments)=>(
+        // todo
         <Card.Grid
             style={{
                 width: '100%',
@@ -126,6 +127,7 @@ export default class Main extends React.Component {
                 if(responseJson>0) {
                     data[key].ele.comments.push({
                         // todo
+                        // userid: data.user.userid,
                         comments: value,
                     });
                     data[key].comment='';

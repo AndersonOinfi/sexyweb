@@ -28,10 +28,12 @@ export default class Explore extends React.Component {
                 let messages = responseJson;
                 if (messages != null && messages.length !== 0) {
                     let data = this.state.data;
+                    let key=0;
                     for (let message of messages) {
                         data.push({
                             ele: message,
                             // user: message.user,
+                            key: key++,
                         });
                     }
                     this.setState({
@@ -44,18 +46,23 @@ export default class Explore extends React.Component {
     avatarPrepath = 'http://localhost:8080/images/';
 
     render() {
+        const eleOnclick=(key)=>{
+            this.setState({
+                modalKey: this.state.modalKey>=0?-1:key
+            })
+        };
+        let items = [];
+        let data = this.state.data;
         const RenderItem = (data) => {
             return (
                 <Card
-                    cover={<img src={this.avatarPrepath + data.ele.source}/>}
+                    cover={<img src={this.avatarPrepath + data.ele.source} onClick={eleOnclick.bind(this,data.key)}/>}
                     hoverable={true}
                 >
                     {data.ele.description}
                 </Card>
             )
         };
-        let items = [];
-        let data = this.state.data;
         let len = this.state.data.length;
         let d=new Array(4);
         for (let i = 0; i < len;) {
@@ -76,8 +83,13 @@ export default class Explore extends React.Component {
                 </Row>
             );
         }
+        let key=this.state.modalKey;
+        let ele=null;
+        if(key>=0)
+            ele=data[key];
         return (
             <div>
+                {EleModal.EleModal(key,ele,eleOnclick.bind(this))}
                 {items}
             </div>
         )

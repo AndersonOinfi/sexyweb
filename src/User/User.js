@@ -7,7 +7,6 @@ import Headerdemo from '../Headerdemo/Headerdemo'
 import Userheader from './Userheader';
 import Userfoot from './Userfoot';
 
-import * as Messager from '../Components/Messager'
 
 const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
@@ -62,7 +61,6 @@ class User extends Component {
     render() {
         return (
             <div>
-                <Messager.Messager/>
                 <Userheader
                     avatar={this.avatarPrepath+this.state.avatar}
                     username={this.state.username}
