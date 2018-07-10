@@ -12,6 +12,7 @@ import Userfoot from './User/Userfoot'
 import Main from './MainMessage/Main'
 import Explore from './MainMessage/Explore'
 import OtherUser from './User/OtherUser'
+import Share from './Share/Share'
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -27,6 +28,7 @@ const PrimaryLayout=()=>(
             <Route path='/page/explore' component={Explore}/>
             <Route path='/page/user' component={User}/>
             <Route path='/page/other/:id' component={OtherUser}/>
+            <Route path='/page/share' component={Share}/>
         </Switch>
     </div>
 );

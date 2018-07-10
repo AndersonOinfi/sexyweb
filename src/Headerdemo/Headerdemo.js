@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Layout, Menu, Icon, Divider, Input, Popover, Card, Button, Avatar, Row } from 'antd';
+import { Layout, Menu, Icon, Divider, Input, Popover, Card, Button, Avatar, Row, BackTop } from 'antd';
 import 'antd/dist/antd.css';
 
 import {Link, withRouter} from 'react-router-dom'
@@ -61,8 +61,9 @@ class Headerdemo extends Component {
             <div style={{width: '100%', height: 80}}>
                 <Header className="boder"
                         style={{background: '#fff', position: 'fixed', zIndex: 1, width: '100%', height: 80}}>
-                    <a href="#"><Icon type="instagram"
-                                      style={{paddingLeft: '5%', fontSize: 50, color: '#000000', margin: 10}}/></a>
+                    <Link to='/page/share'><Icon type="instagram"
+                                                 style={{paddingLeft: '5%', fontSize: 50, color: '#000000', margin: 10}}/>
+                    </Link>
                     <Divider type="vertical" style={{height: 40}}/>
                     <Link to='/page/main'><a href="#" style={{
                         paddingLeft: '1%',
@@ -97,6 +98,9 @@ class Headerdemo extends Component {
                         </Menu.Item>
                     </Menu>
                 </Header>
+                <BackTop>
+                    <div className="backtop"><Icon type="arrow-up" /></div>
+                </BackTop>
             </div>
         );
     }
