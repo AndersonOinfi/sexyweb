@@ -249,7 +249,7 @@ export default class Main extends React.Component {
                             {data.ele.description}
                             <Link to={'/page/other/' + data.user.userid}>
                                 <Card.Meta
-                                    avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
+                                    avatar={<Avatar src={this.avatarPrepath + data.user.avatar}/>}
                                     title={data.user.username}
                                 />
                             </Link>
