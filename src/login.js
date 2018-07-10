@@ -16,7 +16,7 @@ class NormalLoginForm extends React.Component {
     }
 
      componentWillMount(){
-        if(document.cookie!=null&&document.cookie!=''){
+        if(document.cookie!=='null'&&document.cookie!==''){
             var list=document.cookie.split(',');
          var username = list[0];
          var password = list[1];

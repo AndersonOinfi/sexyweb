@@ -174,7 +174,6 @@ class Friendslist extends Component {
                         </WindowScroller>
                     )
                 }
-                {this.state.loading && <Spin className="demo-loading" />}
             </List>
         );
     }

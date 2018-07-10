@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Form, Upload, Icon,} from 'antd';
+import {Form, Upload, Icon, message} from 'antd';
 import 'antd/dist/antd.css';
 
 import '../index.css'
@@ -9,35 +9,21 @@ import '../index.css'
 const FormItem = Form.Item;
 
 class Sharepicture extends Component {
-    state = {
-        classname: 'sharebox',
-        display1:'',
-        display2:'none',
-        imageUrl:"https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-        file:'',
+    constructor(props) {
+        super(props);
+        this.state = {
+            classname: 'sharebox',
+            handleChange: props.handleChange,
+        };
     }
 
-    loaded(){
-        this.setState({display1:'none'});
-        this.setState({display2:''});
+    shareActiveIn() {
+        this.setState({classname: 'sharebox_active'})
     }
 
-    handleChange=(info)=>{
-          this.setState({
-              imageUrl: info.url ,
-          });
-        }
-
-    canceled(){
-        this.setState({display2:'none'});
-        this.setState({display1:''});
+    shareActiveOut() {
+        this.setState({classname: 'sharebox'})
     }
-
-    shareActiveIn(){
-        this.setState({classname:'sharebox_active'})}
-
-    shareActiveOut(){
-        this.setState({classname:'sharebox'})}
 
     normFile = (e) => {
         console.log('Upload event:', e);
@@ -45,7 +31,8 @@ class Sharepicture extends Component {
             return e;
         }
         return e && e.fileList;
-    }
+    };
+
     render() {
         const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
@@ -53,21 +40,21 @@ class Sharepicture extends Component {
             wrapperCol: {span: 14},
         };
         return (
-        <FormItem
+            <FormItem
                 {...formItemLayout}
             >
-                <div className="dropbox" style={{width:400}}>
+                <div className="dropbox" style={{width: 400}}>
                     {getFieldDecorator('dragger', {
                         valuePropName: 'fileList',
                         getValueFromEvent: this.normFile,
                     })(
-                        <Upload.Dragger name="files" action="/upload.do" onChange={this.handleChange}>
-                            <div className={this.state.classname} onClick={this.loaded.bind(this)} onMouseMove={this.shareActiveIn.bind(this)} onMouseOut={this.shareActiveOut.bind(this)} style={{display:this.state.display1}}>
-                                <Icon type="bulb"  style={{ fontSize:'12em'}} />
-                                <div className="ant-upload-text" style={{ fontSize:'3em',marginTop:20}}>Share Pictures</div>
-                            </div>
-                            <div>
-                                <img  onClick={this.canceled.bind(this)} style={{width:400,display:this.state.display2}} src={this.state.imageUrl} />
+                        <Upload.Dragger name="file" action={'1.2.4.8'} onChange={this.state.handleChange}>
+                            <div className={this.state.classname} onMouseMove={this.shareActiveIn.bind(this)}
+                                 onMouseOut={this.shareActiveOut.bind(this)}>
+                                <Icon type="bulb" style={{fontSize: '12em'}}/>
+                                <div className="ant-upload-text" style={{fontSize: '3em', marginTop: 20}}>Share
+                                    Pictures
+                                </div>
                             </div>
                         </Upload.Dragger>
                     )}
@@ -75,7 +62,7 @@ class Sharepicture extends Component {
             </FormItem>
         );
     }
-    }
+}
 
 const Sharepictureform = Form.create()(Sharepicture);
 export default Sharepictureform;

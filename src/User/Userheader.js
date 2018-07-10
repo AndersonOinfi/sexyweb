@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Layout, Icon, Tabs, Card, Col, Row } from 'antd';
 import 'antd/dist/antd.css';
 
+import {withRouter} from 'react-router-dom'
+
 import '../index.css'
 
 import Whitealbum2 from "./Whitealbum2";
@@ -60,7 +62,7 @@ class Userheader extends Component {
                             <Card title={this.state.username}
                                   bordered={false}
                                   style={{ width: 300 ,backgroundColor:'#fafafa'}}
-                                  actions={[<Icon type="edit" />, <Icon type="poweroff" />]}>
+                                  actions={[<Icon type="edit" />, <Icon type="poweroff" onClick={()=>{document.cookie='null';this.props.history.push('/login')}}/>]}>
                                 <p>{this.state.followers} 粉丝</p>
                                 <p>{this.state.followings} 关注</p>
                                 <p>个人简介： {this.state.profile}</p>
@@ -83,4 +85,4 @@ class Userheader extends Component {
     }
 }
 
-export default Userheader;
+export default withRouter(Userheader);

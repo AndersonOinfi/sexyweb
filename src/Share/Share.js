@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import $ from 'jquery'
+
 import { Tooltip,Upload, Icon, Modal,Tabs,Input,Row, Col,Select,Button} from 'antd';
 
 import 'antd/dist/antd.css';
@@ -27,21 +29,98 @@ class Share extends Component {
         canceliconLoading_share: false,
         uploadiconLoading_upload: false,
         canceliconLoading_upload: false,
-        fileList: [{
-            uid: -1,
-            name: 'xxx.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }],
+        fileList: [],
+        api: 'http://localhost:8080/user/album/addele',
+        albumid: -1,
+        description: '',
+        albumApi: 'http://localhost:8080/user/albums',
+        albumData: [],
+        createAlbumApi: 'http://localhost:8080/user/album/create',
+        albumname: '',
     };
 
+    componentDidMount() {
+        this.get()
+    }
+
+    componentDidUpdate() {
+        this.get()
+    }
+
+    get() {
+        fetch(this.state.albumApi,{
+            credentials: "include"
+        })
+            .then(response=>response.json())
+            .then((responseJson)=>{
+                if(responseJson!=null) {
+                    this.setState({
+                        albumid: responseJson[0].albumid,
+                        albumData: responseJson,
+                    })
+                }
+            })
+    }
 
     uploadIconLoading_share = () => {
-        this.setState({ uploadiconLoading_share: true });
+        if(this.state.fileList.length>0&&this.state.albumid!=null) {
+            let form=new FormData();
+            let state=this.state;
+            form.append('albumid',state.albumid);
+            form.append('file',state.fileList[0].originFileObj);
+            form.append('description',state.description);
+            $.ajax({
+                type: 'POST',
+                url: state.api,
+                xhrFields: {withCredentials: true},
+                contentType: false,
+                processData: false,
+                data: form,
+                success: (res)=>{
+                    if(res>0)
+                        this.setState({uploadiconLoading_share: true});
+                }
+            })
+            /*
+            fetch(this.state.api, {
+                credentials: "include",
+                headers: {},
+                //contentType: false,
+                //enctype: 'multipart/form-data',
+                //processData: false,
+                method: 'POST',
+                body: form,
+            })
+                .then(response => response.json())
+                .then((responseJson) => {
+                    if (responseJson >= 0) {
+                        this.setState({uploadiconLoading_share: true});
+                    }
+                })
+             */
+        }
     };
 
     uploadIconLoading_upload = () => {
-        this.setState({ uploadiconLoading_upload: true });
+        if (this.state.fileList.length > 0 && this.state.albumid != null) {
+            let of = [];
+            for (let file of this.state.fileList)
+                of.push(file.originFileObj);
+            fetch(this.state.api, {
+                credentials: "include",
+                method: 'POST',
+                body: new FormData({
+                    'albumid': this.state.albumid,
+                    'file': of,
+                    'description': '',
+                })
+            })
+                .then(response => response.json())
+                .then((responseJson) => {
+                    if (responseJson > 0)
+                        this.setState({uploadiconLoading_upload: true});
+                })
+        }
     };
 
     cancelIconLoading_share = () => {
@@ -59,16 +138,17 @@ class Share extends Component {
     };
 
     handleOk = () => {
-        this.setState({
-            ModalText: 'The modal will be closed after two seconds',
-            confirmLoading: true,
-        });
-        setTimeout(() => {
-            this.setState({
-                visible: false,
-                confirmLoading: false,
+        fetch(this.state.createAlbumApi+'?albumname='+this.state.albumname,{
+            credentials: "include"
+        })
+            .then(response=>response.json())
+            .then((responseJson)=>{
+                if(responseJson>0)
+                    this.setState({
+                        visible: false,
+                        confirmLoading: false,
+                    });
             });
-        }, 2000);
     };
 
     handleModelCancel = () => {
@@ -91,7 +171,7 @@ class Share extends Component {
         });
     };
 
-    handleChange = ({ fileList }) => this.setState({ fileList });
+    handleChange = ({ fileList }) => this.setState({ fileList: fileList });
     render() {
         const { visible, confirmLoading, } = this.state;
         const size = this.state.size;
@@ -102,6 +182,16 @@ class Share extends Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
+        const RenderAlbums=()=>{
+            let data=this.state.albumData;
+            let as=[];
+            for (let d of data) {
+                as.push(
+                    <Option value={d.albumid}>{d.albumName}</Option>
+                )
+            }
+            return as;
+        };
         return (
             <div style={{backgroundColor:'#fafafa'}}>
                 <Tabs defaultActiveKey="1" size='large' style={{textAlign: 'center'}} >
@@ -109,13 +199,14 @@ class Share extends Component {
                         <div style={{marginLeft:250,width:900}}>
                             <Row>
                                 <Col span={12}>
-                                    <Sharepictureform/>
+                                    <Sharepictureform handleChange={this.handleChange.bind(this)}/>
                                 </Col>
                                 <Col span={12} style={{textAlign:'left'}}>
                                     <div style={{width:400,margin: 20}}>
                                         <TextArea rows={4}
                                                   placeholder="分享此刻的想法！"
                                                   size="large"
+                                                  onChange={(e)=>{e.preventDefault();this.setState({description:e.target.value})}}
                                         style={{height:250,fontSize:'1.2em'}}/>
                                     </div>
                                     <div style={{width:400}}>
@@ -124,10 +215,8 @@ class Share extends Component {
                                         <div style={{fontSize:'1.2em',paddingLeft:20,}}>上传相册至:</div>
                                             </Col>
                                             <Col span={8}>
-                                        <Select defaultValue="相册1" style={{ width: 120 }} onChange={this.handleChange_select()}>
-                                            <Option value="相册1">相册1</Option>
-                                            <Option value="相册2">相册2</Option>
-                                            <Option value="相册3">相册3</Option>
+                                        <Select defaultValue={this.state.albumid>0?this.state.albumid:null} style={{ width: 120 }} onChange={this.handleChange_select()}>
+                                            {RenderAlbums.bind(this)()}
                                         </Select>
                                             </Col>
                                             <Col span={8}>
@@ -139,7 +228,7 @@ class Share extends Component {
                                                            confirmLoading={confirmLoading}
                                                            onCancel={this.handleModelCancel}
                                                     >
-                                                        <Input placeholder="请输入相册名称" />
+                                                        <Input placeholder="请输入相册名称" onChange={(e)=>{e.preventDefault();this.setState({albumname:e.target.value})}}/>
                                                     </Modal>
                                                 </Tooltip>
                                             </Col>
@@ -153,7 +242,7 @@ class Share extends Component {
                                         icon="share-alt"
                                         size={size}
                                         loading={this.state.uploadiconLoading_share}
-                                        onClick={this.uploadIconLoading_share}>Upload</Button>
+                                        onClick={this.uploadIconLoading_share.bind(this)}>Upload</Button>
                                             </Col>
                                             <Col span={12}>
                                         <Button
@@ -177,7 +266,7 @@ class Share extends Component {
                                 action="//jsonplaceholder.typicode.com/posts/"
                                 listType="picture-card"
                                 onPreview={this.handlePreview}
-                                onChange={this.handleChange}
+                                onChange={this.handleChange.bind(this)}
                             >
                                 {fileList.length >= 9 ? null : uploadButton}
                             </Upload>
@@ -195,10 +284,8 @@ class Share extends Component {
                                             <Col span={12}>
                                                 <Row>
                                                     <Col span={12}>
-                                                        <Select defaultValue="相册1" style={{ width: 120, }} onChange={this.handleChange_select()}>
-                                                            <Option value="相册1">相册1</Option>
-                                                            <Option value="相册2">相册2</Option>
-                                                            <Option value="相册3">相册3</Option>
+                                                        <Select defaultValue={this.state.albumid>0?this.state.albumid:null} style={{ width: 120 }} onChange={this.handleChange_select()}>
+                                                            {RenderAlbums.bind(this)()}
                                                         </Select>
                                                     </Col>
                                                     <Col span={12}>
