@@ -15,7 +15,8 @@ class Whitealbum2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            albums: []
+            albums: [],
+            albumKey: -1,
         };
         this.update.bind(this)
     }
@@ -33,6 +34,7 @@ class Whitealbum2 extends Component {
     render() {
         const RenderAlbums=()=>{
             let as=[];
+            let key=0;
             for (let album of this.state.albums) {
                 let cover="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png";
                 if(album.length>0)
@@ -42,8 +44,7 @@ class Whitealbum2 extends Component {
                         <Card
                             hoverable
                             style={{width: 250}}
-                            cover={<img alt=''
-                                        src={cover}/>}
+                            cover={<img alt='' src={cover} onClick={()=>{this.setState({albumKey:key++})}}/>}
                         >
                             <Meta
                                 title={album.albumname}
@@ -61,6 +62,7 @@ class Whitealbum2 extends Component {
                         {RenderAlbums.bind(this)()}
                     </Row>
                 </div>
+                <Album album={this.state.albumKey>=0?this.state.albums[this.state.albumKey]:null}/>
             </div>
         );
     }

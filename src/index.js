@@ -11,6 +11,7 @@ import UserHeader from './User/Userheader'
 import Userfoot from './User/Userfoot'
 import Main from './MainMessage/Main'
 import Explore from './MainMessage/Explore'
+import OtherUser from './User/OtherUser'
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -25,6 +26,7 @@ const PrimaryLayout=()=>(
             <Route path='/page/main' component={Main}/>
             <Route path='/page/explore' component={Explore}/>
             <Route path='/page/user' component={User}/>
+            <Route path='/page/other/:id' component={OtherUser}/>
         </Switch>
     </div>
 );

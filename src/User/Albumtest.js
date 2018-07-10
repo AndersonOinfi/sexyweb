@@ -13,9 +13,11 @@ const TabPane = Tabs.TabPane;
 class Album extends Component {
     constructor(props) {
         super(props);
-        this.update.bind(this);
-        this.update(props);
-
+        // this.update.bind(this);
+        // this.update(props);
+        this.state={
+            album: null,
+        }
     }
 
     componentWillReceiveProps(props) {
@@ -25,17 +27,13 @@ class Album extends Component {
 
     update(props) {
         this.setState = {
-            avatar: props.avatar,
-            username: props.username,
-            followers: props.followers,
-            followings: props.followings,
-            profile: props.profile,
-            user: props.user
+            album: props.album != null ? props.album : ({albumname: '', elelist: []})
         }
     }
 
 
     render() {
+        let album=this.state.album;
         return (
             <Layout className="indexback">
                 <Header style={{width: '100%', height: 80}}>
@@ -43,9 +41,8 @@ class Album extends Component {
                 <div
                     style={{marginLeft: '23%', width: 800, background: '#fafafa', padding: '0px', textAlign: 'center'}}>
                     <Tabs defaultActiveKey="1">
-                        <TabPane tab={<span><Icon type="picture"/>xx相册</span>} key="1">
-                            <Albumin user={this.props.user}
-                                     albumid={this.props.albumid}
+                        <TabPane tab={<span><Icon type="picture"/>{album!=null?album.albumname:''}</span>} key="1">
+                            <Albumin album={album!=null?album:{albumname: '', elelist: []}}
                             />
                         </TabPane>
                     </Tabs>

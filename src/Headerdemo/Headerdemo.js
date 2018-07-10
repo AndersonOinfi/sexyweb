@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon, Divider, Input, Popover, Card, Button, Avatar, Row } from 'antd';
 import 'antd/dist/antd.css';
 
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 import '../index.css'
 
@@ -71,7 +71,7 @@ class Headerdemo extends Component {
                     }}>SexyAlbum</a></Link>
                     <Search
                         placeholder="input search text"
-                        onSearch={value => console.log(value)}
+                        onSearch={(value) => {console.log(value);this.props.history.push('/page/explore')}}
                         style={{marginLeft: '15%', width: 200}}
                     />
                     <Menu
@@ -102,4 +102,4 @@ class Headerdemo extends Component {
     }
 }
 
-export default Headerdemo;
+export default withRouter(Headerdemo);

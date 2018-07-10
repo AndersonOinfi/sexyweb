@@ -1,7 +1,9 @@
 import React from 'react'
 
-import {Card, Row, Col, Icon, Input, Dropdown, Menu, Modal} from 'antd'
+import {Card, Row, Col, Icon, Input, Dropdown, Menu, Modal, Avatar} from 'antd'
 // import 'antd/dist/antd.css'
+
+import {Link} from 'react-router-dom'
 
 
 export default class Main extends React.Component {
@@ -13,6 +15,9 @@ export default class Main extends React.Component {
             unlikeApi: 'http://localhost:8080/user/like/cancel',
             commentApi: 'http://localhost:8080/user/comment',
             getCommentsApi: 'http://localhost:8080/user/elecomments',
+            followingsApi: 'http://localhost:8080/user/followings',
+            userSkechApi: 'http://localhost:8080/user/skech',
+            followingList: [],
             data: [],
             modalKey: -1,
         };
@@ -28,6 +33,7 @@ export default class Main extends React.Component {
 
     componentDidMount() {
         this.get()
+        this.getFollowings()
     }
 
     update(props) {
@@ -175,17 +181,53 @@ export default class Main extends React.Component {
         }
     }
 
+    getFollowings() {
+        fetch(this.state.followingsApi,{
+            credentials: "include"
+        })
+            .then(response=>response.json())
+            .then((responseJson)=>{
+                for (let id of responseJson) {
+                    fetch(this.state.userSkechApi+'?userid='+id,{
+                        credentials: "include"
+                    })
+                        .then(res=>res.json())
+                        .then((resJson)=>{
+                            this.setState({
+                                followingList: this.state.followingList.push(resJson)
+                            })
+                        })
+                }
+            })
+    }
+
+    RenderFollowings=()=>{
+        let list=this.state.followingList;
+        let ls=[];
+        for (let user of list) {
+            ls.push(
+                <Card.Grid>
+                    <Link to={'/page/other/'+user.userid}>
+                        <Avatar src={user.avatar}/>
+                        <p>{user.username}</p>
+                    </Link>
+                </Card.Grid>
+            )
+        }
+    };
+
     avatarPrepath='http://localhost:8080/images/';
 
     render() {
-        let RenderComments=this.RenderComments.bind(this);
+        let RenderComments = this.RenderComments.bind(this);
         let items = [];
         for (let data of this.state.data) {
             items.push(
                 <Row>
                     <Col offset={2} span={12}>
                         <Card
-                            cover={<img src={this.avatarPrepath + data.ele.source} onClick={this.EleOnclick.bind(this,data.key)}/>}
+                            cover={<img src={this.avatarPrepath + data.ele.source}
+                                        onClick={this.EleOnclick.bind(this, data.key)}/>}
                             hoverable={true}
                             //loading={true}
                             actions={[
@@ -203,10 +245,12 @@ export default class Main extends React.Component {
                             ]}
                         >
                             {data.ele.description}
-                            <Card.Meta
-                                avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
-                                title={data.user.username}
-                            />
+                            <Link to={'/page/other/' + data.user.userid}>
+                                <Card.Meta
+                                    avatar={<img src={this.avatarPrepath + data.user.avatar}/>}
+                                    title={data.user.username}
+                                />
+                            </Link>
                             <div
                                 style={data.showComments === true ? null : {display: 'none'}}
                             >
@@ -217,9 +261,9 @@ export default class Main extends React.Component {
                 </Row>
             )
         }
-        const EleModal=(key)=>{
-            let data=this.state.data;
-            if(data.length>0&&key>=0) {
+        const EleModal = (key) => {
+            let data = this.state.data;
+            if (data.length > 0 && key >= 0) {
                 return (
                     <Modal visible={key >= 0}
                         // closable={false}
@@ -239,8 +283,19 @@ export default class Main extends React.Component {
                 )
             }
         };
+        const infoCard = () => (
+            <Row style={{position: 'fixed', zIndex: 1}}>
+                <Col span={4} offset={17}>
+                    <Card bordered={false} hoverable={false}>
+                        {this.RenderFollowings.bind(this)()}
+                    </Card>
+                </Col>
+            </Row>
+        );
+
         return (
             <div>
+                <infoCard/>
                 {EleModal(this.state.modalKey)}
                 {items}
             </div>
