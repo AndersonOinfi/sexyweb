@@ -135,15 +135,14 @@ class Albumin extends Component {
         let data=this.state.data;
         let length=data.length;
         for (let i=0;i<length;i+=4) {
-            let es=[];
-            for (let j=0;(j<4)&&(i+j)<length;++j)
-                es.push(RenderEle(data[i+j],i+j))
-            for (let e of es)
-                rs.push(
-                    <Row gutter={16}>
-                        {e}
-                    </Row>
-                )
+            let es = [];
+            for (let j = 0; (j < 4) && (i + j) < length; ++j)
+                es.push(RenderEle(data[i + j], i + j))
+            rs.push(
+                <Row gutter={16}>
+                    {es}
+                </Row>
+            )
         }
         let ele=null;
         let key=this.state.showEle;
