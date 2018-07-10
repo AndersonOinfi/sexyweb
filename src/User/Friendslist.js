@@ -21,7 +21,7 @@ class Friendslist extends Component {
         super(props);
 
         this.state={
-            api: 'http://localhost:8080/user/skech?username=',
+            api: 'http://localhost:8080/user/skech?userid=',
             loading: false,
             data: []
         };

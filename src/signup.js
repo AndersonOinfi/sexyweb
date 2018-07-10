@@ -7,6 +7,8 @@ import {Link, withRouter} from 'react-router-dom'
 import './login.css'
 
 
+
+
 const FormItem = Form.Item;
 
 class NormalSignupForm extends React.Component {
@@ -39,7 +41,8 @@ class NormalSignupForm extends React.Component {
                         .then(response => response.json())
                         .then((responseJson) => {
                             if(responseJson>0) {
-                                alert("注册成功，正在返回登录界面。");
+                                document.cookie=username+','+password;;
+                                alert("注册成功，正在登录。");
                                 history.push('/login');
                             }
                             else {

@@ -15,15 +15,33 @@ class NormalLoginForm extends React.Component {
         this.state = {userName: "", password: "", remember: true};
     }
 
-    //  componentDidMount(){
-    // }
+     componentWillMount(){
+        if(document.cookie!=null&&document.cookie!=''){
+            var list=document.cookie.split(',');
+         var username = list[0];
+         var password = list[1];
+         let formData = new FormData();
+         formData.append('username', username);
+         formData.append('password', password);
+
+            fetch("http://localhost:8080/user/account/login", {
+                method: 'POST',
+                credentials: "include",
+                body: formData,
+            })
+                .then(response => response.json())
+                .then((responseJson) => {
+                    let url = responseJson > 0 ? '/page/main' : '/login';
+                    this.props.history.push(url);
+                });
+        }
+     }
     handleSubmit = (e) => {
         e.preventDefault();
         // var func = this.props.onLogin;
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-
                 var username = document.loginform.username.value;
                 var password = document.loginform.password.value;
                 let formData = new FormData();
@@ -36,6 +54,7 @@ class NormalLoginForm extends React.Component {
                 })
                     .then(response => response.json())
                     .then((responseJson) => {
+                            document.cookie=username+','+password;
                         let url = responseJson > 0 ? '/page/main' : '/login';
                         this.props.history.push(url);
                     });
@@ -71,7 +90,7 @@ class NormalLoginForm extends React.Component {
                             valuePropName: 'checked',
                             initialValue: true,
                         })(
-                            <Checkbox>Remember me</Checkbox>
+                            <Checkbox name='remember' id="remember">Remember me</Checkbox>
                         )}
                         <a className="login-form-forgot" href="https://www.baidu.com">Solve all your problem.</a>
                         <br/>
