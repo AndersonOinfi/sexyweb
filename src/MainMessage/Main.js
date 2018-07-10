@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {Card, Row, Col, Icon, Input, Dropdown, Menu, Modal, Avatar} from 'antd'
+import {Card, Row, Col, Icon, Input, Dropdown, Menu, Modal, Avatar, Layout, Divider} from 'antd'
 // import 'antd/dist/antd.css'
 
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 
 export default class Main extends React.Component {
@@ -32,7 +32,7 @@ export default class Main extends React.Component {
     }
 
     componentDidMount() {
-        this.get()
+        this.get();
         this.getFollowings()
     }
 
@@ -193,27 +193,29 @@ export default class Main extends React.Component {
                     })
                         .then(res=>res.json())
                         .then((resJson)=>{
+                            let list=this.state.followingList;
+                            list.push(resJson);
                             this.setState({
-                                followingList: this.state.followingList.push(resJson)
+                                followingList: list
                             })
                         })
                 }
             })
     }
 
-    RenderFollowings=()=>{
-        let list=this.state.followingList;
-        let ls=[];
+    RenderFollowings=()=> {
+        let list = this.state.followingList;
+        let ls = [];
         for (let user of list) {
             ls.push(
-                <Card.Grid>
-                    <Link to={'/page/other/'+user.userid}>
-                        <Avatar src={user.avatar}/>
-                        <p>{user.username}</p>
-                    </Link>
-                </Card.Grid>
+                <Menu.Item key={user.userid}>
+                    <Avatar src={this.avatarPrepath + user.avatar}/>
+                    {user.username}
+                    <Link to={'/page/other/' + user.userid}>{'go'}</Link>
+                </Menu.Item>
             )
         }
+        return ls;
     };
 
     avatarPrepath='http://localhost:8080/images/';
@@ -284,21 +286,20 @@ export default class Main extends React.Component {
             }
         };
         const infoCard = () => (
-            <Row style={{position: 'fixed', zIndex: 1}}>
-                <Col span={4} offset={17}>
-                    <Card bordered={false} hoverable={false}>
+            <Layout>
+                <Layout.Sider style={{ width: '400px', position: 'fixed', left: '70%' }}>
+                    <Menu mode="inline">
                         {this.RenderFollowings.bind(this)()}
-                    </Card>
-                </Col>
-            </Row>
+                    </Menu>
+                </Layout.Sider>
+            </Layout>
         );
 
         return (
             <div>
-                <infoCard/>
+                {infoCard.bind(this)()}
                 {EleModal(this.state.modalKey)}
                 {items}
             </div>
         )
-    }
-}
+    }}

@@ -53,6 +53,7 @@ class Whitealbum2 extends Component {
                     </Col>
                 )
             }
+            return as;
         };
         // todo add <Album/> to bottom
         return (

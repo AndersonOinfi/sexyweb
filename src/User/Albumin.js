@@ -4,11 +4,13 @@ import { Layout, Menu, Breadcrumb, Icon, Tabs, Card, Upload, Modal, Col, Row } f
 
 import 'antd/dist/antd.css';
 
+import {EleModal} from "../MainMessage/EleModal";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 const TabPane = Tabs.TabPane;
 const { Meta } = Card;
-const str="http://localhost:8080/images/"
+const str="http://localhost:8080/images/";
 
 function Rowthree(props) {
     return (
@@ -18,7 +20,6 @@ function Rowthree(props) {
                 hoverable
                 style={{ width: 250 }}
                 cover={<img  alt="example" src={str+props.data[props.id].source}/>}
-
             >
                 <Meta
                     title={props.data[props.id].description}
@@ -97,42 +98,61 @@ function Rowone(props) {
     )
 }
 
+
 class Albumin extends Component {
     constructor(props){
         super(props);
-        this.state={
-            data:[],
-            ok:false
+        this.state= {
+            data: [],
+            ok: false,
             //state可按需求进行更改
+            showEle: -1,
         }
     }
 
     componentWillReceiveProps(props) {
-        var album = props.album;
+        let album = props.album;
         this.setState({data: album.eleList});
     }
 
     render() {
-        let rowlist = new Array();
-        var i=0;
-        var rowindex=0;
-        var last;
-        var length=this.state.data.length;
-        while(i<length)
-        {
-            last=length-i;
-            if(last>=3)
-            {rowlist[rowindex]=<Rowthree key={rowindex} id={i} data={this.state.data}/>;i+=3;}
-            else if(last===2)
-            {rowlist[rowindex]=<Rowtwo key={rowindex} id={i} data={this.state.data}/>;i+=2;}
-            else if(last===1)
-            {rowlist[rowindex]=<Rowone key={rowindex} id={i} data={this.state.data}/>;i+=1;}
-            rowindex+=1;
+        const EleClick=(key)=>{
+            this.setState({
+                showEle: this.state.showEle>=0?-1:key
+            })
+        };
+        const RenderEle=(ele,key)=> {
+            if (ele != null)
+                return (
+                    <Col span={6}>
+                        <Card hoverable={true} cover={<img src={str + ele.source} onClick={EleClick.bind(this,key)}/>}>
+                            <Card.Meta description={ele.description}/>
+                        </Card>
+                    </Col>
+                )
+        };
+        let rs = [];
+        let data=this.state.data;
+        let length=data.length;
+        for (let i=0;i<length;i+=4) {
+            let es=[];
+            for (let j=0;(j<4)&&(i+j)<length;++j)
+                es.push(RenderEle(data[i+j],i+j))
+            for (let e of es)
+                rs.push(
+                    <Row gutter={16}>
+                        {e}
+                    </Row>
+                )
         }
+        let ele=null;
+        let key=this.state.showEle;
+        if(key>=0)
+            ele=data[key];
         return (
-
             <div>
-                {rowlist}
+                {EleModal(ele!=null?{ele: ele}:null,EleClick.bind(this))}
+                {rs}
             </div>
         );
     }
