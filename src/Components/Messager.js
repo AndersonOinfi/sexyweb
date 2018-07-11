@@ -60,12 +60,18 @@ export class Messager extends React.Component {
 
 
     show() {
-        if(this.state.messages!=null&&this.state.messages.length!==0) {
-            tips('A Message!',
-                <Avatar src={'http://localhost:8080/images/' + this.state.messages[0].user.avatar}/>,
-                this.state.messages[0].info + " " + this.state.messages[0].type)
+        if (this.state.messages != null && this.state.messages.length !== 0) {
+            for (let message of this.state.messages) {
+                let user = message.user;
+                let msg=(message.type===1)?(user.username+' follows you!'):'';
+                msg=(message.type===4)?(user.username+' 分享了新照片!'):'';
+                tips('A Message!',
+                    <Avatar src={'http://localhost:8080/images/' + this.state.messages[0].user.avatar}/>,
+                    msg)
+            }
         }
     }
+
 
     render() {
         return(
