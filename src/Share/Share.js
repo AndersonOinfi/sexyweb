@@ -158,9 +158,7 @@ class Share extends Component {
         });
     };
 
-    handleChange_select(value) {
-        console.log(`selected ${value}`);
-    }
+
 
     handleCancel = () => this.setState({ previewVisible: false });
 
@@ -215,7 +213,7 @@ class Share extends Component {
                                         <div style={{fontSize:'1.2em',paddingLeft:20,}}>上传相册至:</div>
                                             </Col>
                                             <Col span={8}>
-                                        <Select defaultValue={this.state.albumid>0?this.state.albumid:null} style={{ width: 120 }} onChange={this.handleChange_select()}>
+                                        <Select defaultValue={this.state.albumid>0?this.state.albumid:null} style={{ width: 120 }} >
                                             {RenderAlbums.bind(this)()}
                                         </Select>
                                             </Col>
@@ -284,7 +282,7 @@ class Share extends Component {
                                             <Col span={12}>
                                                 <Row>
                                                     <Col span={12}>
-                                                        <Select defaultValue={this.state.albumid>0?this.state.albumid:null} style={{ width: 120 }} onChange={this.handleChange_select()}>
+                                                        <Select defaultValue={this.state.albumid>0?this.state.albumid:null} style={{ width: 120 }}>
                                                             {RenderAlbums.bind(this)()}
                                                         </Select>
                                                     </Col>

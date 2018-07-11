@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Avatar} from 'antd'
 import notification from 'antd/lib/notification'
 import 'antd/lib/notification/style/css'
 
@@ -62,7 +62,7 @@ export class Messager extends React.Component {
     show() {
         if(this.state.messages!=null&&this.state.messages.length!==0) {
             tips('A Message!',
-                <img src={'http://localhost:8080/images/' + this.state.messages[0].user.avatar}/>,
+                <Avatar src={'http://localhost:8080/images/' + this.state.messages[0].user.avatar}/>,
                 this.state.messages[0].info + " " + this.state.messages[0].type)
         }
     }

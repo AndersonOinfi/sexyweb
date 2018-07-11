@@ -13,7 +13,7 @@ class Userfoot extends Component {
         return (
             <Layout className="indexback">
         <Footer style={{ textAlign: 'center',backgroundColor:'#fafafa' }}>
-        SexyAlbum ©2018 Created by YingKuNO.1
+        CoolMeAlbum ©2018 Created by YingKuNO.1
         </Footer>
             </Layout>
         );

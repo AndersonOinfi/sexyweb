@@ -69,7 +69,7 @@ class Headerdemo extends Component {
                         paddingLeft: '1%',
                         color: '#000000',
                         fontSize: '2.4em'
-                    }}>SexyAlbum</a></Link>
+                    }}>CoolMeAlbum</a></Link>
                     <Search
                         placeholder="input search text"
                         onSearch={(value) => {console.log(value);this.props.history.push('/page/explore')}}
